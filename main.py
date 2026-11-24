@@ -31,6 +31,9 @@ def main() -> None:
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
         f.write(text)
+    # Round-trip check: what landed on disk must be exactly the line.
+    with open("/output/entry.txt", encoding="utf-8", newline="") as f:
+        assert f.read() == text, "written entry.txt differs from the line"
 
 
 if __name__ == "__main__":
